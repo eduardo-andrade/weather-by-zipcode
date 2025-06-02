@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"regexp"
 )
 
@@ -22,14 +21,13 @@ func HandleCEP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Serializa novamente pois já lemos o body e não podemos reutilizar r.Body diretamente
 	jsonBody, err := json.Marshal(input)
 	if err != nil {
 		http.Error(w, `{"error":"internal error"}`, http.StatusInternalServerError)
 		return
 	}
 
-	resp, err := http.Post(os.Getenv("SERVICE_B_URL")+"/weather", "application/json", bytes.NewBuffer(jsonBody))
+	resp, err := http.Post("http://service-b:8081/weather", "application/json", bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Printf("error calling service B: %v", err)
 		http.Error(w, `{"error":"service B unavailable"}`, http.StatusInternalServerError)

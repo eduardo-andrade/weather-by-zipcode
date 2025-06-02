@@ -13,7 +13,6 @@ type viacepResponse struct {
 	Localidade string `json:"localidade"`
 }
 
-// FetchCity busca a cidade correspondente ao CEP na API ViaCEP.
 func FetchCity(cep string) (string, error) {
 	resp, err := http.Get(fmt.Sprintf("https://viacep.com.br/ws/%s/json/", cep))
 	if err != nil {
