@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+
+  service-a:
+    build:
+      context: .
+      dockerfile: service-a/Dockerfile
+    ports:
+      - "8080:8080"
+
+  service-b:
+    build:
+      context: .
+      dockerfile: service-b/Dockerfile
+    ports:
+      - "8081:8080"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-config.yaml:/etc/otelcol/config.yaml
+    ports:
+      - "4317:4317"
+      - "55681:55681"
