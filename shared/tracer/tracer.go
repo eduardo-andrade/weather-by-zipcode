@@ -5,16 +5,16 @@ import (
 	"log"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/exporters/zipkin"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
 func InitTracer(ctx context.Context, serviceName string) func() {
-	exporter, err := otlptracehttp.New(ctx)
+	exporter, err := zipkin.New("http://localhost:9411/api/v2/spans")
 	if err != nil {
-		log.Fatalf("failed to create OTLP exporter: %v", err)
+		log.Fatalf("failed to create Zipkin exporter: %v", err)
 	}
 
 	tp := sdktrace.NewTracerProvider(

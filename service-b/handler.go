@@ -43,7 +43,7 @@ func HandleWeather(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	celsius, err := weather.FetchTemperature(city)
+	celsius, err := weather.FetchTemperature(r.Context(), city)
 	if err != nil {
 		http.Error(w, `{"error":"weather service error"}`, http.StatusInternalServerError)
 		return
