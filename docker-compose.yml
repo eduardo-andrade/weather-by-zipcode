@@ -22,7 +22,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      WEATHER_API_KEY: "put_your_api_key_here"
+      WEATHER_API_KEY: "b00b37ad939c4476bae184026253005"
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest

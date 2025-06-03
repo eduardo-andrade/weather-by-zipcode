@@ -12,7 +12,7 @@ import (
 )
 
 func InitTracer(ctx context.Context, serviceName string) func() {
-	exporter, err := zipkin.New("http://localhost:9411/api/v2/spans")
+	exporter, err := zipkin.New("http://zipkin:9411/api/v2/spans")
 	if err != nil {
 		log.Fatalf("failed to create Zipkin exporter: %v", err)
 	}
